@@ -35,17 +35,30 @@ module.exports.create = (req, res, next) => {
     .catch(error => next(error));
 }
 
+
 module.exports.delete = (req, res, next) => {
-  Promise.all([
-    User.findByIdAndDelete(req.user.id),
-    Meal.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)}),
-    Review.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)})])
-    .then(([user]) => {
+  User.findByIdAndRemove(req.params.id)
+    .then(user => {
       if (!user) {
-        throw createError(404, 'User not found');
+        next(createError(404, 'User not found'));
       } else {
-        res.status(204).json();
+        res.redirect('/users');
       }
     })
     .catch(error => next(error));
-}
+ }
+
+
+// module.exports.delete = (req, res, next) => {
+//   Promise.all([
+//     User.findByIdAndDelete(req.user.id),
+//     Review.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)})])
+//     .then(([user]) => {
+//       if (!user) {
+//         throw createError(404, 'User not found');
+//       } else {
+//         res.status(204).json();
+//       }
+//     })
+//     .catch(error => next(error));
+// }
