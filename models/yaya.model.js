@@ -36,6 +36,11 @@ const yayaSchema =  new mongoose.Schema({
     ref: 'Meal',
   },
 
+  reviews: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Review',
+  },
+  
 }, { 
   timestamps: true,
   toObject: {
