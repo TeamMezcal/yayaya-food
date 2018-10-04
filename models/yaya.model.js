@@ -56,10 +56,12 @@ const yayaSchema =  new mongoose.Schema({
   }
 });
 
-  yayaSchema.virtual('meals', {
-    ref: 'Meal',
-    localField: '_id',
-    foreignField: 'user',
-    options: { sort: { createdAt: -1 }, limit: 20 }
-  });
+yayaSchema.index({ "location": "2dsphere" });
+
+yayaSchema.virtual('meals', {
+  ref: 'Meal',
+  localField: '_id',
+  foreignField: 'user',
+  options: { sort: { createdAt: -1 }, limit: 20 }
+});
 
