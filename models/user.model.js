@@ -4,6 +4,34 @@ const SALT_WORK_FACTOR = 10;
 
 const userSchema =  new mongoose.Schema({
 
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+
+  password: {
+    type: String,
+    required: true
+  },
+
+  meals: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Meal',
+  },
+
+  reviews: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Review',
+  },
+
+
   location: {
     type: {
       type: String,
@@ -14,18 +42,8 @@ const userSchema =  new mongoose.Schema({
       type: [Number],
     }
   }, 
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
-},
   
-{ 
+},{ 
   timestamps: true,
   toObject: {
     virtuals: true
@@ -44,6 +62,9 @@ const userSchema =  new mongoose.Schema({
     }
   }
 });
+
+userSchema.index({ "location": "2dsphere" });
+
 
 const User = mongoose.model('User', userSchema);
 module.exports = User; 

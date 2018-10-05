@@ -7,7 +7,7 @@ const mealSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: 'The meal description is required'
+    required: [true, 'The meal description is required']
   },
   images: {
     type: [String],
@@ -21,10 +21,10 @@ const mealSchema = new mongoose.Schema({
     type: [String],
     default: []
   }, 
-  yaya: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Yaya',
-    required: [true, `Meal needs a yaya`]
+    ref: 'User',
+    //required: [true, `Meal needs a yaya`]
   }
 }, { 
   timestamps: true,
@@ -45,5 +45,10 @@ const mealSchema = new mongoose.Schema({
   }
 });
 
+
+mealSchema.index({ "location": "2dsphere" });
+
+
 const Meal = mongoose.model('Meal', mealSchema);
+
 module.exports = Meal;
