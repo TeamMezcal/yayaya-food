@@ -30,7 +30,7 @@ const mealSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    //required: [true, `Meal needs a yaya`]
+    required: [true, `Meal needs a yaya`]
   }
 }, { 
   timestamps: true,

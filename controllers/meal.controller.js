@@ -1,5 +1,6 @@
 const Meal = require('../models/meal.model');
 const createError = require('http-errors');
+const User = require('../models/user.model')
 const mongoose = require('mongoose');
 
 // module.exports.list = (req, res, next) => {
@@ -17,7 +18,7 @@ module.exports.list = (req, res, next) => {
 
 module.exports.create = (req, res, next) => {
   const meal = new Meal(req.body);
-  //meal.user = req.user.id;
+  meal.user = req.user.id;
 
   if (req.file) {
     meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;

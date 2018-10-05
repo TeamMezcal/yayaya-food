@@ -11,6 +11,7 @@ const path         = require('path');
 
 const usersRoute = require('./routes/users.routes')
 const mealsRoute = require('./routes/meals.routes')
+const sessionsRoute = require('./routes/sessions.routes')
 
 mongoose.Promise = Promise;
 mongoose
@@ -56,5 +57,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 app.use('/users', usersRoute)
 app.use('/meals', mealsRoute)
+app.use('/sessions', sessionsRoute);
 
-module.exports = app;
+
+module.exports = app; 
