@@ -17,7 +17,15 @@ module.exports.list = (req, res, next) => {
 
 
 module.exports.create = (req, res, next) => {
-  const meal = new Meal(req.body);
+  const meal = new Meal({
+    name: req.body.name, 
+    description: req.body.description, 
+    images: req.body.images, 
+    tags: req.body.tags,
+    ingredients: req.body.ingredients,
+    portions: req.body.portions,
+    user: req.body.user
+  });
   meal.user = req.user.id;
 
   if (req.file) {

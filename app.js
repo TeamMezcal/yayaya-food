@@ -10,7 +10,7 @@ const path         = require('path');
 
 
 const usersRoute = require('./routes/users.routes')
-//const mealsRoute = require('./routes/meals.routes')
+const mealsRoute = require('./routes/meals.routes')
 const sessionsRoute = require('./routes/sessions.routes')
 const reviewsRoute = require('./routes/reviews.routes')
 
@@ -59,7 +59,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 app.use('/users', usersRoute)
 app.use('/sessions', sessionsRoute);
-app.use('/users/:id/meals', mealsRoute)
+app.use('/users/:userId/meals', mealsRoute)
 app.use('/meals/:mealsId/reviews', reviewsRoute);
 
 
