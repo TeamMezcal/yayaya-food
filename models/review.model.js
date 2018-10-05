@@ -12,20 +12,20 @@ const reviewSchema = new mongoose.Schema({
   },
 
   rating: {
-    type: Number, 
-    required: "Rate from 1 to 5 stars ", 
-    enum: [1, 2, 3, 4, 5]
+    type: Number 
+    //required: "Rate from 1 to 5 stars ", 
+    //enum: [1, 2, 3, 4, 5]
   }, 
 
   meal: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Meal',
-    required: [true, `Review needs a meal`]
+    ref: 'Meal'
+    //required: [true, `Review needs a meal`]
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, `Review needs an owner`]
+    ref: 'User'
+    //required: [true, `Review needs an owner`]
   }
 }, { 
   timestamps: true,
