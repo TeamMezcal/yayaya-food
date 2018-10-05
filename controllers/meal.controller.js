@@ -15,26 +15,9 @@ module.exports.list = (req, res, next) => {
 }
 
 
-// module.exports.create = (req, res, next) => {
-//   const meal = new Meal (req.body);
-//   //meal.user = req.user.id;
-
-//   if (req.files) {
-//     meal.images = [];
-//     for (const file of req.files) {
-//       meal.images.push(`${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
-//     }
-//   }
-
-//   meal.save()
-//     .then(meal => res.status(201).json(meal))
-//     .catch(error => next(error));
-// }
-
-
 module.exports.create = (req, res, next) => {
   const meal = new Meal(req.body);
-  meal.user = req.user.id;
+  //meal.user = req.user.id;
 
   if (req.file) {
     meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;

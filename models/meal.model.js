@@ -21,6 +21,12 @@ const mealSchema = new mongoose.Schema({
     type: [String],
     default: []
   }, 
+
+  portions: {
+    type: Number, 
+    default: 1
+  },
+
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
