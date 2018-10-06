@@ -7,6 +7,10 @@ const favicon      = require('serve-favicon');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const passport = require('passport');
+
+
+require('./config/passport.config').setup(passport); 
 
 
 const usersRoute = require('./routes/users.routes')
@@ -61,6 +65,7 @@ app.use('/users', usersRoute)
 app.use('/sessions', sessionsRoute);
 app.use('/users/:userId/meals', mealsRoute)
 app.use('/meals/:mealsId/reviews', reviewsRoute);
+
 
 
 
