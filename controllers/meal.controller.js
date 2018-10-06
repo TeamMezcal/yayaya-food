@@ -20,13 +20,20 @@ module.exports.create = (req, res, next) => {
   const meal = new Meal({
     name: req.body.name, 
     description: req.body.description, 
-    images: req.body.images, 
-    tags: req.body.tags,
-    ingredients: req.body.ingredients,
-    portions: req.body.portions,
-    user: req.body.user
-  });
-  meal.user = req.user.id;
+    user: req.user
+  }
+  //meal.user = req.user._id
+    //req.body
+  //   name: req.body.name, 
+  //   description: req.body.description, 
+  //   images: req.body.images, 
+  //   tags: req.body.tags,
+  //   ingredients: req.body.ingredients,
+  //   portions: req.body.portions,
+    
+  
+  );
+  
 
   if (req.file) {
     meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
