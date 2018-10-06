@@ -49,22 +49,40 @@ const userSchema =  new mongoose.Schema({
   toObject: {
     virtuals: true
   },
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = doc._id;
-      delete ret._id;
-      delete ret.__v;
-      delete ret.password;
-      if (!ret['meals']) {
-        ret.posts = [];
-      }
-      return ret;
-    }
-  }
+  // toJSON: {
+  //   virtuals: true,
+  //   transform: (doc, ret) => {
+  //     ret.id = doc._id;
+  //     delete ret._id;
+  //     delete ret.__v;
+  //     //delete ret.password;
+  //     if (!ret['meals']) {
+  //       ret.posts = [];
+  //     }
+  //     return ret;
+  //   }
+  // }
 });
 
 userSchema.index({ "location": "2dsphere" });
+
+
+userSchema.pre('save', function save(next) {
+  const user = this;
+  if (!user.isModified('password')) {
+    next();
+  } else {
+    bcrypt.genSalt(SALT_WORK_FACTOR)
+      .then(salt => {
+        return bcrypt.hash(user.password, salt)
+      })
+      .then(hash => {
+        user.password = hash;
+        next();
+      })
+      .catch(error => next(error));
+  }
+});
 
 userSchema.methods.checkPassword = function (password) {
   return bcrypt.compare(password, this.password)
