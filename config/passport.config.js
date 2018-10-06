@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user.model');
-const createError = require('http-errors');
+const createError = require('http-errors'); 
 
 module.exports.setup = (passport) => {
   
@@ -21,12 +21,12 @@ module.exports.setup = (passport) => {
     User.findOne({ email: email })
       .then(user => {
         if (!user) {
-          throw createError(401, 'Invalid email or password');
+          throw createError(401, 'Invalid email ');
         } else {
           return user.checkPassword(password)
             .then(match => {
               if (!match) {
-                throw createError(401, 'Invalid email or password');
+                throw createError(401, 'Invalid password');
               } else {
                 next(null, user);
               }

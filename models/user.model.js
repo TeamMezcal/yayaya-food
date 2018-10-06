@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
+const passport = require('passport')
 
 const userSchema =  new mongoose.Schema({
 
@@ -35,7 +36,7 @@ const userSchema =  new mongoose.Schema({
   location: {
     type: {
       type: String,
-      enum: ['Point'],
+      enum: ['Point'],  
       default: 'Point'
     },
     coordinates: {
@@ -65,6 +66,9 @@ const userSchema =  new mongoose.Schema({
 
 userSchema.index({ "location": "2dsphere" });
 
+userSchema.methods.checkPassword = function (password) {
+  return bcrypt.compare(password, this.password)
+}; 
 
 const User = mongoose.model('User', userSchema);
 module.exports = User; 

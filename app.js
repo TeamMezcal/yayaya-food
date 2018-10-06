@@ -8,6 +8,7 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 const passport = require('passport');
+const session      = require('express-session')
 
 
 require('./config/passport.config').setup(passport); 
@@ -38,6 +39,24 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: process.env.COOKIE_SECRET || 'Super Secret',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    maxAge: 2419200000
+  }
+ }));
+
+app.use(passport.initialize()); 
+app.use(passport.session()); 
+
+app.use((req, res, next) => {
+  res.locals.session = req.user; 
+  next(); 
+})
+
 
 // Express View engine setup
 
