@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
   title: {
     type: String, 
-    required: 'The fooking title is required'
+    required: [true, 'The fooking title is required']
   }, 
 
   content: {
     type: String,
-    required: 'The comment content is required'
+    required: [true, 'The comment content is required']
   },
 
   rating: {

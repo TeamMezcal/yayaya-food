@@ -91,7 +91,7 @@ app.use('/sessions', sessionsRoute);
 
 app.use('/meals', mealsRoute);
 
-app.use('/reviews/:mealsId/reviews', reviewsRoute);
+app.use('/reviews', reviewsRoute);
 
 
 
