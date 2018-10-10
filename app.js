@@ -86,9 +86,12 @@ app.use((req, res, next) => {
 // app.use('/', index);
 
 app.use('/users', usersRoute)
+
 app.use('/sessions', sessionsRoute);
-app.use('/users/:userId/meals', mealsRoute)
-app.use('/meals/:mealsId/reviews', reviewsRoute);
+
+app.use('/meals', mealsRoute);
+
+app.use('/reviews/:mealsId/reviews', reviewsRoute);
 
 
 

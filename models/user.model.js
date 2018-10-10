@@ -22,17 +22,11 @@ const userSchema =  new mongoose.Schema({
     required: true
   },
 
-  meals: {
+  meals: [{
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Meal',
-  },
-
-  reviews: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Review',
-  },
-
-
+    ref: 'Meals',
+  }],
+  
   location: {
     type: {
       type: String,
