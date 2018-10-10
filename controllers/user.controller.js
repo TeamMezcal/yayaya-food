@@ -25,9 +25,7 @@ module.exports.list = (req, res, next) => {
 
 
 module.exports.listByUser = (req, res, next) => {
-  const userId = req.params.id
-  console.log('ENTRO')
-  
+  const userId = req.params.id  
   Meal.find({ user: userId })
     .then(meals => {
         console.log('Meals: ', meals)

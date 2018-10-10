@@ -1,7 +1,7 @@
 const Review = require('../models/review.model')
 const createError = require('http-errors');
 const mongoose = require('mongoose'); 
-const User = require('../models/user.model')
+
 
 module.exports.create = (req, res, next) => {
   const review = new Review(req.body);
@@ -13,3 +13,26 @@ module.exports.create = (req, res, next) => {
     .catch(error => next(error));
 }
 
+module.exports.listByMeal = (req, res, next) => {
+  const mealId = req.params.id  
+  Review.find({ meal: mealId })
+    .then(reviews => {
+        console.log('reviews: ', reviews)
+        res.json(reviews)
+      })
+    .catch(error => next(error))
+}
+
+
+module.exports.delete = (req, res, next) => {
+  Review.findOneAndRemove(req.params.id)
+    .then(review => {
+      if (!review) {
+        throw createError(404, 'Review not found');
+      } else {
+        res.status(204).json();
+      }
+    })
+    .catch(error => next(error));
+  }
+  

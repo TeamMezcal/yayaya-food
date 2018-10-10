@@ -20,7 +20,8 @@ module.exports.create = (req, res, next) => {
   const meal = new Meal({
     name: req.body.name, 
     description: req.body.description, 
-    user: req.user._id  
+    price: req.body.price,
+    user: req.user._id 
   }
   //meal.user = req.user._id
     //req.body
