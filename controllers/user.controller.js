@@ -4,9 +4,10 @@ const Meal = require('../models/meal.model');
 const Review = require('../models/review.model');
 const createError = require('http-errors');
 
+
 module.exports.list = (req, res, next) => {
   User.find()
-    .populate({ path: 'reviews', select: 'id' })
+  //  .populate({ path: 'reviews', select: 'id' })
     .then(users => res.json(users))
     .catch(error => next(error));
 }
@@ -41,7 +42,7 @@ module.exports.mealByUser = (req, res, next) => {
 
 module.exports.get = (req, res, next) => {
   User.findById(req.params.id)
-    .populate('meals')
+    //.populate('meals')
     .then(user => res.json(user))
     .catch(error => next(error));
 }

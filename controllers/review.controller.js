@@ -5,8 +5,10 @@ const mongoose = require('mongoose');
 
 module.exports.create = (req, res, next) => {
   const review = new Review(req.body);
+
+  console.log("ENTROOOOO ------>",req.params.id)
   review.user = req.user._id;
-  review.meal = req.params.id;
+  review.meal = req.params.mealId;
 
   review.save()
     .then(review => res.status(201).json(review))

@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const createError   = require('http-errors');
 const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express      = require('express');
@@ -52,12 +53,6 @@ app.use(session({
 app.use(passport.initialize()); 
 app.use(passport.session()); 
 
-app.use((req, res, next) => {
-  res.locals.session = req.user; 
-  next(); 
-})
-
-
 // Express View engine setup
 
 app.use(require('node-sass-middleware')({
@@ -70,30 +65,24 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-
-
-// default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
-//@TO-DO:
-app.use((req, res, next) => {
-  res.locals.session = req.user; 
-  next(); 
-})
-
-
-
 // const index = require('./routes/index');
 // app.use('/', index);
 
 app.use('/users', usersRoute)
-
 app.use('/sessions', sessionsRoute);
-
 app.use('/meals', mealsRoute);
+app.use('/meals/:mealId/reviews', reviewsRoute);
 
-app.use('/reviews', reviewsRoute);
+app.use((req, res, next) => {
+  next(createError(404)); 
+})
 
+app.use((error, req, res, next) => {
+  console.error(error);
 
+  res.status(error.status || 500);
+  res.json({ message: error.message });
+})
 
 
 module.exports = app; 

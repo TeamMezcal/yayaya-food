@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 const passport = require('passport')
+const Meal = require('../models/meal.model')
 
 const userSchema =  new mongoose.Schema({
 
@@ -22,11 +23,6 @@ const userSchema =  new mongoose.Schema({
     required: true
   },
 
-  meals: [{
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Meals',
-  }],
-  
   location: {
     type: {
       type: String,
@@ -40,22 +36,18 @@ const userSchema =  new mongoose.Schema({
   
 },{ 
   timestamps: true,
-  toObject: {
-    virtuals: true
-  },
-  // toJSON: {
-  //   virtuals: true,
-  //   transform: (doc, ret) => {
-  //     ret.id = doc._id;
-  //     delete ret._id;
-  //     delete ret.__v;
-  //     //delete ret.password;
-  //     if (!ret['meals']) {
-  //       ret.posts = [];
-  //     }
-  //     return ret;
-  //   }
-  // }
+  toJSON: {
+    transform: (doc, ret) => {
+      ret.id = doc._id;
+      const coordinates = ret.location.coordinates;
+      delete ret.location;
+      ret.location = coordinates;
+      delete ret._id;
+      delete ret.__v;
+      delete ret.password;
+      return ret;
+    }
+  }
 });
 
 userSchema.index({ "location": "2dsphere" });

@@ -10,9 +10,4 @@ router.post('/', meals.create);
 router.get('/:id', meals.get);
 router.delete('/:id', meals.delete);
 
-router.post('/:id/reviews', reviews.create)
-router.get('/:id/reviews', reviews.listByMeal)
-router.delete('/:id/reviews/:id', reviews.delete);
-
-
 module.exports = router;

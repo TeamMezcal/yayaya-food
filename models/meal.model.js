@@ -35,26 +35,18 @@ const mealSchema = new mongoose.Schema({
 
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  //  required: [true, `Meal needs a yaya`]
+    ref: 'User'
   }
 }, { 
   timestamps: true,
-  toObject: {
-    virtuals: true
-  },
-  // toJSON:  {
-  //   virtuals: true,
-  //   transform: (doc, ret) => {
-  //     ret.id = doc._id;
-  //     delete ret._id;
-  //     delete ret.__v;
-  //     if (!ret['comments']) {
-  //       ret.comments = [];
-  //     }  
-  //     return ret;
-  //   }
-  // }
+  toJSON:  {
+    transform: (doc, ret) => {
+      ret.id = doc._id;
+      delete ret._id;
+      delete ret.__v;
+      return ret;
+    }
+  }
 });
 
 
