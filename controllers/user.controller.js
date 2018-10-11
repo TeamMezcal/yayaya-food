@@ -4,16 +4,45 @@ const Meal = require('../models/meal.model');
 const Review = require('../models/review.model');
 const createError = require('http-errors');
 
+
 module.exports.list = (req, res, next) => {
   User.find()
-    .populate({ path: 'reviews', select: 'id' })
+  //  .populate({ path: 'reviews', select: 'id' })
     .then(users => res.json(users))
     .catch(error => next(error));
 }
 
+
+// module.exports.listByUser = (req, res, next) => {
+//   const userId = req.params.id;
+//   console.log("PARAMS!!!!!!------->" ,req.params.id)
+ 
+//   Meal.find({ userId })
+//     .then(meals => {
+//       res.json(meals);
+//     })
+//     .catch(error => next(error));
+//  };
+
+
+module.exports.listByUser = (req, res, next) => {
+  const userId = req.params.id  
+  Meal.find({ user: userId })
+    .then(meals => {
+        console.log('Meals: ', meals)
+        res.json(meals)
+      })
+    .catch(error => next(error))
+}
+
+
+module.exports.mealByUser = (req, res, next) => {
+  
+}
+
 module.exports.get = (req, res, next) => {
   User.findById(req.params.id)
-    .populate('meals')
+    //.populate('meals')
     .then(user => res.json(user))
     .catch(error => next(error));
 }
@@ -37,7 +66,7 @@ module.exports.create = (req, res, next) => {
 
 
 module.exports.delete = (req, res, next) => {
-  User.findByIdAndRemove(req.params.id)
+  User.findByIdAndRemove(req.params.id) 
     .then(user => {
       if (!user) {
         next(createError(404, 'User not found'));

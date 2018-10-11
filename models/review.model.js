@@ -3,29 +3,29 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
   title: {
     type: String, 
-    required: 'The fooking title is required'
+    required: [true, 'The fooking title is required']
   }, 
 
   content: {
     type: String,
-    required: 'The comment content is required'
+    required: [true, 'The comment content is required']
   },
 
   rating: {
-    type: Number 
-    //required: "Rate from 1 to 5 stars ", 
-    //enum: [1, 2, 3, 4, 5]
+    type: Number, 
+    required: [true, "Rate from 1 to 5 stars "], 
+    min: 1,
+    max: 5
   }, 
-
   meal: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Meal'
-    //required: [true, `Review needs a meal`]
+    ref: 'Meal',
+    required: [true, `Review needs a meal`]
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-    //required: [true, `Review needs an owner`]
+    ref: 'User',
+    required: [true, `Review needs an owner`]
   }
 }, { 
   timestamps: true,

@@ -2,6 +2,8 @@ const Meal = require('../models/meal.model');
 const createError = require('http-errors');
 const User = require('../models/user.model')
 const mongoose = require('mongoose');
+const Review = require('../models/review.model')
+
 
 // module.exports.list = (req, res, next) => {
 //   Meal.find({ meals: mongoose.Types.ObjectId(req.params.mealsId) })
@@ -10,15 +12,41 @@ const mongoose = require('mongoose');
 // }
 
 module.exports.list = (req, res, next) => {
-  Meal.find()
+  const criterial = {}
+  // id => userId
+  if (req.params.id) {
+    criterial.user = req.params.userId;
+  }
+  Meal.find(criterial)
     .then(meals => res.json(meals))
     .catch(error => next(error));
-}
+},
 
 
 module.exports.create = (req, res, next) => {
-  const meal = new Meal(req.body);
-  meal.user = req.user.id;
+  const meal = new Meal({
+    name: req.body.name, 
+    description: req.body.description, 
+    price: req.body.price,
+    user: req.user._id,
+    images: req.body.images
+  } 
+
+
+
+  // //meal.user = req.user._id
+  //   //req.body
+  // //   name: req.body.name, 
+  // //   description: req.body.description, 
+  // //   images: req.body.images, 
+  // //   tags: req.body.tags,
+  // //   ingredients: req.body.ingredients,
+  // //   portions: req.body.portions,
+    
+  
+  // ));
+  
+  ); 
 
   if (req.file) {
     meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;

@@ -3,7 +3,8 @@ const router = express.Router({ mergeParams: true });
 const reviews = require('../controllers/review.controller');
 const secure = require('../middleware/secure.middleware');
 
+router.get('/', reviews.listByMeal);
 router.post('/', reviews.create);
-//router.delete('/:id', reviews.delete);
+router.delete('/:id', reviews.delete);
 
 module.exports = router;
