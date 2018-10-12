@@ -12,6 +12,7 @@ const Review = require('../models/review.model')
 // }
 
 module.exports.list = (req, res, next) => {
+  
   const criterial = {}
   // id => userId
   if (req.params.id) {
@@ -24,13 +25,16 @@ module.exports.list = (req, res, next) => {
 
 
 module.exports.create = (req, res, next) => {
-  const meal = new Meal({
-    name: req.body.name, 
-    description: req.body.description, 
-    price: req.body.price,
-    user: req.user._id,
-    images: req.body.images
-  } 
+  console.log(req.body);
+  console.log(req.user);
+  
+  // const meal = new Meal({
+  //   name: req.body.name, 
+  //   description: req.body.description, 
+  //   price: req.body.price,
+  //   user: req.user._id,
+  //   images: req.body.images
+  // }
 
 
 
@@ -46,7 +50,7 @@ module.exports.create = (req, res, next) => {
   
   // ));
   
-  ); 
+  // ); 
 
   if (req.file) {
     meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;

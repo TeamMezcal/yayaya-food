@@ -2,6 +2,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user.model');
 const createError = require('http-errors'); 
 
+
+
 module.exports.setup = (passport) => {
   
   passport.serializeUser((user, next) => {
@@ -17,22 +19,33 @@ module.exports.setup = (passport) => {
   passport.use('auth-local', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
-  }, (email, password, next) => {
+  }, (email, password, next) => {   
+    console.log('dsadas' + email);
+     
     User.findOne({ email: email })
       .then(user => {
         if (!user) {
+        console.log('no user');
+                  
           throw createError(401, 'Invalid email ');
         } else {
           return user.checkPassword(password)
-            .then(match => {
+            .then(match => {                            
               if (!match) {
+                console.log('wrong password');
+                                
                 throw createError(401, 'Invalid password');
               } else {
+                              
                 next(null, user);
               }
             })
         }
       })
-      .catch(error => next(error))
+      .catch(error => {
+        console.log('5');
+        
+        next(error);
+      })
   }));
 }

@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 const createError = require('http-errors');
 const passport = require('passport');
 
-module.exports.create = (req, res, next) => {
+module.exports.create = (req, res, next) => {  
   passport.authenticate('auth-local', (error, user) => {
     if (error) {
       next(error);
@@ -10,7 +10,8 @@ module.exports.create = (req, res, next) => {
       req.login(user, (error) => {
         if (error) {
           next(error);
-        } else {
+        } else {    
+          
           res.status(201).json(user);
         }
       })

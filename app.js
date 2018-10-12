@@ -10,9 +10,17 @@ const logger       = require('morgan');
 const path         = require('path');
 const passport = require('passport');
 const session      = require('express-session')
+const cors = require('cors');
+const corsConfig = require('./config/cors.config');
+const app = express();
 
+
+app.use(passport.initialize()); 
+app.use(passport.session()); 
 
 require('./config/passport.config').setup(passport); 
+app.use(cors(corsConfig));
+
 
 
 const usersRoute = require('./routes/users.routes')
@@ -33,25 +41,25 @@ mongoose
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
-const app = express();
+require("./config/session.config")(app);
+app.use(cookieParser());
 
-// Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({
-  secret: process.env.COOKIE_SECRET || 'Super Secret',
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true,
-    maxAge: 2419200000
-  }
- }));
 
-app.use(passport.initialize()); 
-app.use(passport.session()); 
+// app.use(session({
+//   secret: process.env.COOKIE_SECRET || 'Super Secret',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {
+//     secure: false,
+//     httpOnly: true,
+//     maxAge: 60 * 60 * 1000
+//   }
+//  }));
+
 
 // Express View engine setup
 
@@ -73,16 +81,41 @@ app.use('/sessions', sessionsRoute);
 app.use('/meals', mealsRoute);
 app.use('/meals/:mealId/reviews', reviewsRoute);
 
-app.use((req, res, next) => {
-  next(createError(404)); 
-})
+// app.use((req, res, next) => {
+//   next(createError(404)); 
+// })
 
-app.use((error, req, res, next) => {
-  console.error(error);
+// app.use((error, req, res, next) => {
+//   console.error(error);
+
+//   res.status(error.status || 500);
+//   res.json({ message: error.message });
+// })
+
+
+
+app.use(function (error, req, res, next) {
+  console.error('ERROR:', error);
 
   res.status(error.status || 500);
-  res.json({ message: error.message });
-})
+  
+  const data = {};
+  
+  if (error instanceof mongoose.Error.ValidationError) {
+    res.status(400);
+    for (field of Object.keys(error.errors)) {
+      error.errors[field] = error.errors[field].message;
+    }
+    data.errors = error.errors;
+  } else if (error instanceof mongoose.Error.CastError) {
+    error = createError(404, 'Resource not found');
+  }
+  
+  data.message = error.message;  
+  res.json(data);
+});
+
+
 
 
 module.exports = app; 

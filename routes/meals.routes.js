@@ -6,7 +6,7 @@ const user = require('../middleware/user.middleware');
 const reviews = require('../controllers/review.controller')
 
 router.get('/', meals.list);
-router.post('/', meals.create);
+router.post('/', secure.isAuthenticated, meals.create);
 router.get('/:id', meals.get);
 router.delete('/:id', meals.delete);
 
