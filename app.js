@@ -10,7 +10,8 @@ const logger       = require('morgan');
 const path         = require('path');
 const passport = require('passport');
 const session      = require('express-session')
-
+const cors = require('cors');
+const corsConfig = require('./config/cors.config');
 
 require('./config/passport.config').setup(passport); 
 
@@ -60,7 +61,8 @@ app.use(require('node-sass-middleware')({
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
-      
+
+app.use(cors(corsConfig))
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
