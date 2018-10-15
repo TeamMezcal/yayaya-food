@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 
 module.exports.create = (req, res, next) => {
   const review = new Review(req.body);
-
-  console.log("ENTROOOOO ------>",req.params.id)
   review.user = req.user._id;
   review.meal = req.params.mealId;
 
@@ -16,14 +14,14 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.listByMeal = (req, res, next) => {
-  const mealId = req.params.id  
-  Review.find({ meal: mealId })
-    .then(reviews => {
-        console.log('reviews: ', reviews)
-        res.json(reviews)
-      })
-    .catch(error => next(error))
-}
+  const criterial = {}
+  if (req.params.id) {
+    criterial.meal = req.params.id
+  } 
+  Review.find(criterial)
+  .then(meals => res.json(meals))
+  .catch(error => next(error));
+},
 
 
 module.exports.delete = (req, res, next) => {
