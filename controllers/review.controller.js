@@ -2,7 +2,6 @@ const Review = require('../models/review.model')
 const createError = require('http-errors');
 const mongoose = require('mongoose'); 
 
-
 module.exports.create = (req, res, next) => {
   const review = new Review(req.body);
   review.user = req.user._id;
@@ -14,13 +13,24 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.listByMeal = (req, res, next) => {
-  const criterial = {}
-  if (req.params.id) {
-    criterial.meal = req.params.id
-  } 
-  Review.find(criterial)
-  .then(meals => res.json(meals))
-  .catch(error => next(error));
+  // const criterial = {}
+  // if (req.params.id) {
+  //   criterial.meal = req.params.id
+  // } 
+  // Review.find(criterial)
+  // .then(reviews => res.json(reviews))
+  // .catch(error => next(error));
+
+  console.log('id url:', req.params)
+
+  Review.find({ meal: req.params.mealId })
+  .then(data => {
+    console.log('reviews for this meal', data)
+    res.status(200).json({
+      "data": data
+    })
+  })
+  .catch(err => console.error(err))
 },
 
 
