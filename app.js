@@ -22,14 +22,14 @@ const sessionsRoute = require('./routes/sessions.routes')
 const reviewsRoute = require('./routes/reviews.routes')
 
 
-mongoose.Promise = Promise;
-mongoose
-  .connect('mongodb://localhost/yayaya-project', {useMongoClient: true})
-  .then(() => {
-    console.log('Connected to Mongo!')
-  }).catch(err => {
-    console.error('Error connecting to mongo', err)
-  });
+// mongoose.Promise = Promise;
+// mongoose
+//   .connect('mongodb://localhost/yayaya-project', {useMongoClient: true})
+//   .then(() => {
+//     console.log('Connected to Mongo!')
+//   }).catch(err => {
+//     console.error('Error connecting to mongo', err)
+//   });
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
