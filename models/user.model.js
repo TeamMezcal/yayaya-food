@@ -40,8 +40,8 @@ const userSchema =  new mongoose.Schema({
     transform: (doc, ret) => {
       ret.id = doc._id;
       const coordinates = ret.location.coordinates;
-      delete ret.location;
-      ret.location = coordinates;
+      // delete ret.location;
+      // ret.location = coordinates;
       delete ret._id;
       delete ret.__v;
       delete ret.password;
@@ -50,7 +50,7 @@ const userSchema =  new mongoose.Schema({
   }
 });
 
-userSchema.index({ "location": "2dsphere" });
+//userSchema.index({ "location": "2dsphere" });
 
 
 userSchema.pre('save', function save(next) {
