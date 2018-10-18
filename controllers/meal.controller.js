@@ -30,7 +30,8 @@ module.exports.create = (req, res, next) => {
     price: req.body.price,
     user: req.user._id,
     tags: req.body.tags,
-    images: req.body.images
+    images: req.body.images, 
+    ingredients: req.body.ingredients
   } 
 
 
