@@ -26,9 +26,7 @@ module.exports.listByMeal = (req, res, next) => {
   Review.find({ meal: req.params.mealId })
   .then(reviews => {
     //console.log('reviews for this meal ----------->>>>', data)
-    res.status(200).json({
-      "reviews": reviews
-    })
+    res.status(200).json(reviews)
   })
   .catch(err => console.error(err))
 },
