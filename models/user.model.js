@@ -26,8 +26,8 @@ const userSchema =  new mongoose.Schema({
   location: {
     type: {
       type: String,
-      enum: ['Point'],  
-      default: []
+      enum: ['Point']
+    
     },
     coordinates: {
       type: [Number],
