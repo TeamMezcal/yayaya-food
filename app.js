@@ -14,7 +14,7 @@ const cors = require('cors');
 const corsConfig = require('./config/cors.config');
 
 require('./config/passport.config').setup(passport); 
-
+require('./config/db.config')
 
 const usersRoute = require('./routes/users.routes')
 const mealsRoute = require('./routes/meals.routes')
