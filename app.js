@@ -67,9 +67,6 @@ app.use(cors(corsConfig))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-// const index = require('./routes/index');
-// app.use('/', index);
-
 app.use('/users', usersRoute)
 app.use('/sessions', sessionsRoute);
 app.use('/meals', mealsRoute);
