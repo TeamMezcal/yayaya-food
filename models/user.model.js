@@ -23,18 +23,18 @@ const userSchema =  new mongoose.Schema({
     required: true
   },
 
-  location: {
-    type: {
-      type: String,
-      enum: ['Point']
+//   location: {
+//     type: {
+//       type: String,
+//       enum: ['Point']
     
-    },
-    coordinates: {
-      type: [Number],
-    }
-  }, 
+//     },
+//     coordinates: {
+//       type: [Number],
+//     }
+//   }, 
   
-},{ 
+// },{ 
   timestamps: true,
   toJSON: {
     transform: (doc, ret) => {
