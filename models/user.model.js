@@ -34,7 +34,9 @@ const userSchema =  new mongoose.Schema({
 //     }
 //   }, 
   
-// },{ 
+//
+ },
+{ 
   timestamps: true,
   toJSON: {
     transform: (doc, ret) => {
