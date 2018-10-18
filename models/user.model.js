@@ -41,7 +41,7 @@ const userSchema =  new mongoose.Schema({
   toJSON: {
     transform: (doc, ret) => {
       ret.id = doc._id;
-      const coordinates = ret.location.coordinates;
+     // const coordinates = ret.location.coordinates;
       // delete ret.location;
       // ret.location = coordinates;
       delete ret._id;
