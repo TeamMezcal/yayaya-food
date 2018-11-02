@@ -28,7 +28,7 @@ module.exports.create = (req, res, next) => {
     name: req.body.name, 
     description: req.body.description, 
     price: req.body.price,
-    user: user,
+    user: req.user._id,
     tags: req.body.tags,
     images: req.body.images, 
     ingredients: req.body.ingredients
