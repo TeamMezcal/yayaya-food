@@ -24,18 +24,9 @@ module.exports.list = (req, res, next) => {
 
 
 module.exports.create = (req, res, next) => {
-  const meal = new Meal({
-    name: req.body.name, 
-    description: req.body.description, 
-    price: req.body.price,
-    user: req.user._id,
-    tags: req.body.tags,
-    images: req.body.images, 
-    ingredients: req.body.ingredients
-  } 
-
-
-
+  const meal = new Meal(req.body);
+  meal.user = req.user_id;
+  
   // //meal.user = req.user._id
   //   //req.body
   // //   name: req.body.name, 
@@ -48,8 +39,7 @@ module.exports.create = (req, res, next) => {
   
   // ));
   
-  ); 
-
+  
   if (req.file) {
     meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
   }
