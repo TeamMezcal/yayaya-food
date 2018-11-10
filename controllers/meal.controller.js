@@ -25,7 +25,7 @@ module.exports.list = (req, res, next) => {
 
 module.exports.create = (req, res, next) => {
   const meal = new Meal(req.body);
-  meal.user = req.user_id;
+  
   
   // //meal.user = req.user._id
   //   //req.body
@@ -65,14 +65,3 @@ module.exports.get = (req, res, next) => {
     });
 }
 
-module.exports.delete = (req, res, next) => {
-  Meal.findOneAndDelete({ user: req.params.userId, _id: req.params.id })
-    .then(meal => {
-      if (!meal) {
-        throw createError(404, 'Post not found');
-      } else {
-        res.status(204).json();
-      }
-    })
-    .catch(error => next(error));
-}
