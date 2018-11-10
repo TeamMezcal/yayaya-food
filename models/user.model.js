@@ -23,6 +23,13 @@ const userSchema =  new mongoose.Schema({
     required: true
   },
 
+  active:{
+    type: Boolean,
+    default: true,
+    required: true
+  },
+
+
 //   location: {
 //     type: {
 //       type: String,

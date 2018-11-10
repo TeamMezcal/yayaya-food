@@ -12,10 +12,11 @@ const passport = require('passport');
 const session      = require('express-session')
 const cors = require('cors');
 const corsConfig = require('./config/cors.config');
+const templates = require('./templates/template')
 
 require('./config/passport.config').setup(passport); 
 require('./config/db.config')
-
+  
 const usersRoute = require('./routes/users.routes')
 const mealsRoute = require('./routes/meals.routes')
 const sessionsRoute = require('./routes/sessions.routes')

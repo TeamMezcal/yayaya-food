@@ -5,6 +5,7 @@ const secure = require('../middleware/secure.middleware');
 const user = require('../middleware/user.middleware');
 
 router.post('/', users.create);
+router.post('/activate', users.activate)
 router.get('/', users.list);
 router.get('/:id',  users.get)
 
