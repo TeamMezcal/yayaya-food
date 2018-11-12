@@ -3,7 +3,6 @@ const User = require('../models/user.model');
 const Meal = require('../models/meal.model');
 const Review = require('../models/review.model');
 const createError = require('http-errors');
-const templates = require('./../templates/template')
 
 
 module.exports.list = (req, res, next) => {
@@ -13,26 +12,6 @@ module.exports.list = (req, res, next) => {
     .catch(error => next(error));
 }
 
-
-module.exports.activate = (req, res, next) => {
-  let { email} = req.body;
-  let transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: 'your email address',
-      pass: 'your email password'
-    }
-  });
-  transporter.sendMail({
-    from: '"Yayaya Activator 👻" <activator@yayaya.com>',
-    to: email, 
-    subject: Activation, 
-    text: message,
-    html: templates.templateRegister(message),
-  })
-  .then(info => res.render('message', {email, subject, message, info}))
-  .catch(error => console.log(error));
-}
 
 // module.exports.listByUser = (req, res, next) => {
 //   const userId = req.params.id;

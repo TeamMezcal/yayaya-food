@@ -14,18 +14,6 @@ const mealSchema = new mongoose.Schema({
     type: Number, 
     required: [true, 'The price for the meal is required']
   },
-
-   address: {
-    type: {
-      type: String,
-      enum: ['Point']
-    
-    },
-    coordinates: {
-      type: [Number],
-    }
-  }, 
-
   
   // coverImage: {
   //   type: String,

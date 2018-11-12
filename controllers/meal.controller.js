@@ -24,8 +24,18 @@ module.exports.list = (req, res, next) => {
 
 
 module.exports.create = (req, res, next) => {
-  const meal = new Meal(req.body);
-  
+  const meal = new Meal({
+    name: req.body.name, 
+    description: req.body.description, 
+    price: req.body.price,
+    user: req.user._id,
+    tags: req.body.tags,
+    images: req.body.images, 
+    ingredients: req.body.ingredients
+  } 
+
+
+
   // //meal.user = req.user._id
   //   //req.body
   // //   name: req.body.name, 
@@ -35,17 +45,14 @@ module.exports.create = (req, res, next) => {
   // //   ingredients: req.body.ingredients,
   // //   portions: req.body.portions,
     
-  if (req.files) {
-    meal.images = [];
-    for (const file of req.files){
-      meal.images.push(`${req.protocol}://${req.get('host')}/uploads/${file.filename}`)
-    }
-  }
-  
-  
   
   // ));
   
+  ); 
+
+  if (req.file) {
+    meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  }
 
   meal.save()
     .then(meal => res.status(201).json(meal))
@@ -68,3 +75,14 @@ module.exports.get = (req, res, next) => {
     });
 }
 
+module.exports.delete = (req, res, next) => {
+  Meal.findOneAndDelete({ user: req.params.userId, _id: req.params.id })
+    .then(meal => {
+      if (!meal) {
+        throw createError(404, 'Post not found');
+      } else {
+        res.status(204).json();
+      }
+    })
+    .catch(error => next(error));
+}
