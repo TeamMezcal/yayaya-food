@@ -24,6 +24,8 @@ module.exports.list = (req, res, next) => {
 
 
 module.exports.create = (req, res, next) => {
+  console.log('meal.create-in')
+  
   const meal = new Meal({
     name: req.body.name, 
     description: req.body.description, 
@@ -34,8 +36,7 @@ module.exports.create = (req, res, next) => {
     ingredients: req.body.ingredients
   } 
 
-
-
+  
   // //meal.user = req.user._id
   //   //req.body
   // //   name: req.body.name, 
@@ -44,11 +45,12 @@ module.exports.create = (req, res, next) => {
   // //   tags: req.body.tags,
   // //   ingredients: req.body.ingredients,
   // //   portions: req.body.portions,
-    
+  
   
   // ));
   
   ); 
+  console.log('meal.create-out')
 
   if (req.files) {
     meal.images=[];
