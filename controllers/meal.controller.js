@@ -28,7 +28,7 @@ module.exports.create = (req, res, next) => {
     name: req.body.name, 
     description: req.body.description, 
     price: req.body.price,
-    user: req.user._id,
+    user: req.body.user,
     tags: req.body.tags,
     images: req.body.images, 
     ingredients: req.body.ingredients
@@ -50,8 +50,10 @@ module.exports.create = (req, res, next) => {
   
   ); 
 
-  if (req.file) {
-    meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  if (req.files) {
+    meal.images=[];
+
+    meal.images.push(`${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`);
   }
 
   meal.save()
