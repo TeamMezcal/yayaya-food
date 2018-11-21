@@ -50,13 +50,16 @@ module.exports.create = (req, res, next) => {
   // ));
   
   ); 
+  console. log("meal antes de save ------>", meal)
   console.log('meal.create-out')
 
   if (req.files) {
     meal.images=[];
+    for (const file of req.files) {
+      meal.images.push(`${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`);
+    }
+  };
 
-    meal.images.push(`${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`);
-  }
 
   meal.save()
     .then(meal => res.status(201).json(meal))
