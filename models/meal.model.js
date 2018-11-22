@@ -5,33 +5,16 @@ const mealSchema = new mongoose.Schema({
     type: String,
     required: [true, 'The meal name is required']
   },
-  location: {
-    type: {
-      type: String,
-      enum: ['Point']
-
-    },
-    coordinates: {
-      type: [Number],
-    }
-  },
-
-
-  address: {
-    type: String,
-    required: [true, 'Address is mandatory']
-  },
-
   description: {
     type: String,
     required: [true, 'The meal description is required']
   },
 
   price: {
-    type: Number,
+    type: Number, 
     required: [true, 'The price for the meal is required']
   },
-
+  
   // coverImage: {
   //   type: String,
   //   default: "https://www.google.es/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwicksSSgPrdAhXIy4UKHQErBAwQjRx6BAgBEAU&url=http%3A%2F%2Fgrandmother-blog.com%2Fblog%2F2017%2F02%2F10%2Fcomfort-food-whatever-you-want-soup-and-adult-soup-that-we-grandmas-may-cook-with-our-grandchildren-but-must-forbid-them-to-eat%2F&psig=AOvVaw2hWeNT1xWABvB0VWuQDQiY&ust=1539196528441200" 
@@ -44,16 +27,14 @@ const mealSchema = new mongoose.Schema({
   tags: {
     type: [String],
     default: []
-
   },
   ingredients: {
     type: [String],
-    default: [],
-    required: [true, 'Meal must have ingredients']
-  },
+    default: []
+  }, 
 
   portions: {
-    type: Number,
+    type: Number, 
     default: 1
   },
 
@@ -61,20 +42,17 @@ const mealSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
-}, {
-    timestamps: true,
-    toJSON: {
-      transform: (doc, ret) => {
-        ret.id = doc._id;
-        const coordinates = ret.location.coordinates;
-        delete ret.location;
-        ret.location = coordinates;
-        delete ret._id;
-        delete ret.__v;
-        return ret;
-      }
+}, { 
+  timestamps: true,
+  toJSON:  {
+    transform: (doc, ret) => {
+      ret.id = doc._id;
+      delete ret._id;
+      delete ret.__v;
+      return ret;
     }
-  });
+  }
+});
 
 
 mealSchema.index({ "location": "2dsphere" });

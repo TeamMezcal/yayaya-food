@@ -24,19 +24,18 @@ module.exports.list = (req, res, next) => {
 
 
 module.exports.create = (req, res, next) => {
-  console.log('meal.create-in')
-  
   const meal = new Meal({
     name: req.body.name, 
     description: req.body.description, 
     price: req.body.price,
-    user: req.body.user,
+    user: req.user._id,
     tags: req.body.tags,
     images: req.body.images, 
     ingredients: req.body.ingredients
   } 
 
-  
+
+
   // //meal.user = req.user._id
   //   //req.body
   // //   name: req.body.name, 
@@ -45,21 +44,15 @@ module.exports.create = (req, res, next) => {
   // //   tags: req.body.tags,
   // //   ingredients: req.body.ingredients,
   // //   portions: req.body.portions,
-  
+    
   
   // ));
   
   ); 
-  console. log("meal antes de save ------>", meal)
-  console.log('meal.create-out')
 
-  if (req.files) {
-    meal.images=[];
-    for (const file of req.files) {
-      meal.images.push(`${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`);
-    }
-  };
-
+  if (req.file) {
+    meal.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  }
 
   meal.save()
     .then(meal => res.status(201).json(meal))

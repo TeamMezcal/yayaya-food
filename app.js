@@ -32,7 +32,7 @@ const reviewsRoute = require('./routes/reviews.routes')
 //   });
 
 const app_name = require('./package.json').name;
-
+const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
 const app = express();
 
@@ -62,8 +62,7 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 
-app.use(cors(corsConfig));
-
+app.use(cors(corsConfig))
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
@@ -82,22 +81,6 @@ app.use((error, req, res, next) => {
 
   res.status(error.status || 500);
   res.json({ message: error.message });
-
-  const data = {}
-
-  if (error instanceof mongoose.Error.ValidationError) {
-    res.status(400);
-    for (field of Object.keys(error.errors)) {
-      error.errors[field] = error.errors[field].message
-    }
-    data.errors = error.errors
-  } else if (error instanceof mongoose.Error.CastError) {
-    error = createError(404, 'Resource not found')
-  }
-
-  data.message = error.message;
-  res.json(data);
-
 })
 
 
