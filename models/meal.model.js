@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 const mealSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'The meal name is required']
+   // required: [true, 'The meal name is required']
   },
   description: {
     type: String,
-    required: [true, 'The meal description is required']
+   // required: [true, 'The meal description is required']
   },
 
   price: {
     type: Number, 
-    required: [true, 'The price for the meal is required']
+   // required: [true, 'The price for the meal is required']
   },
   
   // coverImage: {
